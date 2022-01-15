@@ -1,10 +1,10 @@
 {
-  "name": "crud-postgreSQL",
+  "name": "crud-postgresql",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,14 @@
     "express": "^4.17.2",
     "express-promise-router": "^4.1.1",
     "pg": "^8.7.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiasBriel/postgreSQL-CRUD.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DiasBriel/postgreSQL-CRUD/issues"
+  },
+  "homepage": "https://github.com/DiasBriel/postgreSQL-CRUD#readme",
+  "description": ""
 }
