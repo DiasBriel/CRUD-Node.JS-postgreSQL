@@ -32,4 +32,21 @@ const findProductById = async (req, res) => {
   res.status(200).send(response.rows);
 };
 
-module.exports = { createProduct, listAllProducts, findProductById };
+const updateProductById = async (req, res) => {
+  const productId = parseInt(req.params.id);
+  const { productname, quantity, price } = req.body;
+
+  const response = await db.query(
+    "UPDATE products SET productname = $1, quantity = $2, price = $3 WHERE productId = $4",
+    [productname, quantity, price, productId]
+  );
+
+  res.status(200).send({ message: "Product updated successfully!" });
+};
+
+module.exports = {
+  createProduct,
+  listAllProducts,
+  findProductById,
+  updateProductById,
+};
