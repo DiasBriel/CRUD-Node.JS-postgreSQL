@@ -83,10 +83,19 @@ const patchProductById = async (req, res) => {
     .send({ message: "Product information updated successfully!" });
 };
 
+
+const deleteProductById = async (req, res) => {
+  const productId = parseInt(req.params.id);
+  await db.query("DELETE FROM products WHERE productId = $1", [productId]);
+
+  res.status(200).send({ message: "Product deleted successfully!", productId });
+};
+
 module.exports = {
   createProduct,
   listAllProducts,
   findProductById,
   updateProductById,
   patchProductById,
+  deleteProductById,
 };
