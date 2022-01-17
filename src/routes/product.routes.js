@@ -10,4 +10,7 @@ router.get("/products", productController.listAllProducts);
 //Get product by ID
 router.get("/products/:id", productController.findProductById);
 
+//Update product by ID
+router.put("/products/:id", productController.updateProductById);
+
 module.exports = router;
