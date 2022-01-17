@@ -36,7 +36,7 @@ const updateProductById = async (req, res) => {
   const productId = parseInt(req.params.id);
   const { productname, quantity, price } = req.body;
 
-  const response = await db.query(
+  await db.query(
     "UPDATE products SET productname = $1, quantity = $2, price = $3 WHERE productId = $4",
     [productname, quantity, price, productId]
   );
@@ -44,9 +44,49 @@ const updateProductById = async (req, res) => {
   res.status(200).send({ message: "Product updated successfully!" });
 };
 
+/*
+For more flexibility in PATCH method,
+the function below is a little bit more complex
+*/
+const patchProductById = async (req, res) => {
+  const productId = parseInt(req.params.id);
+  const { body } = req;
+
+  //get the body size to use this value inside the loop function
+  const bodySize = Object.keys(body).length;
+
+  //create a 'query' variable that will be responsible for building the query string
+  let query = "UPDATE products SET";
+
+  //the array 'callBackArray' get the values of updated rows and pass in db.query
+  let callBackArray = [];
+
+  //for loop responsible for creating the query string
+  for (let i = 0; i < bodySize; i++) {
+    const currentKey = Object.keys(body);
+    const queryFragment = ` ${currentKey[i]} = $${i + 1}`;
+
+    i === bodySize - 1
+      ? (query = query + queryFragment)
+      : (query = query + queryFragment + ",");
+
+    callBackArray.push(body[currentKey[i]]);
+  }
+
+  //add productId in query string
+  query = query + ` WHERE productId = ${productId}`;
+
+  await db.query(query, callBackArray);
+
+  res
+    .status(200)
+    .send({ message: "Product information updated successfully!" });
+};
+
 module.exports = {
   createProduct,
   listAllProducts,
   findProductById,
   updateProductById,
+  patchProductById,
 };
